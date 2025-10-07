@@ -16,6 +16,32 @@ const menuItems = [
         description: "merge cubes in 3D space",
         image: "hypercube.png",
       },
+      {
+        title: "nyam.app",
+        description: "an AI-powered nutrients tracker",
+        image: "nyam.png",
+      },
+      {
+        title: "filee.es",
+        description: "an encrypted file management app",
+        image: "fileees.png",
+      },
+      {
+        title: "Boats & Cards",
+        description:
+          "a 1v1 multiplayer game for android, set on the ocean, with boats and cards",
+        image: "bnc.png",
+      },
+      {
+        title: "Calendar",
+        description: "a calendar app for organizing events and tasks",
+        image: "calendar.png",
+      },
+      {
+        title: "Forkilla",
+        description: "a calendar app for organizing events and tasks",
+        image: "calendar.png",
+      },
     ],
   },
   {
@@ -70,13 +96,13 @@ const App = () => {
 
   // Optionally, auto-focus the first item on mount
   useEffect(() => {
-    // refs.current[0]?.focus();
-  }, []);
+    setCurrentProjectIndex(0);
+  }, [currentIndex]);
 
   return (
     <div className={styles.terminal}>
       <div className={styles.menu}>
-        <div className={styles.prompt}>lluís montabes</div>
+        <div className={styles.prompt}>lmg</div>
         <div className={styles.response}>
           <p>
             <span role="img" aria-label="waving hand">
@@ -95,25 +121,34 @@ const App = () => {
                 window.location.hash = item.href;
               }}
               index={i}
-              onHover={() => setCurrentIndex(i)}
+              onHover={() => {
+                setCurrentIndex(i);
+                setCurrentProjectIndex(0); // Reset project index on hover
+              }}
             />
             {currentIndex === i && (
               <>
                 <div className={styles.response}>
                   <div className={styles.showcase}>
                     {item.showcase.map((project, i) => (
-                      <MenuItem
-                        key={project.title}
-                        label={project.title}
-                        highlighted={currentProjectIndex === i}
-                        onHover={() => setCurrentProjectIndex(i)}
-                        onClick={function (): void {
-                          throw new Error("Function not implemented.");
-                        }}
-                        index={0}
-                        image={project.image}
-                      />
+                      <div className={styles.project} key={i}>
+                        <MenuItem
+                          key={project.title}
+                          label={project.title}
+                          highlighted={currentProjectIndex === i}
+                          onHover={() => setCurrentProjectIndex(i)}
+                          onClick={function (): void {
+                            throw new Error("Function not implemented.");
+                          }}
+                          index={0}
+                          image={null}
+                          highlightStyle="underline"
+                        />
+                      </div>
                     ))}
+                  </div>
+                  <div className={styles.description}>
+                    ~ {item.showcase[currentProjectIndex].description}
                   </div>
                 </div>
               </>
@@ -132,6 +167,7 @@ const MenuItem = ({
   index,
   onHover,
   image,
+  highlightStyle = "background",
 }: {
   label: string;
   highlighted: boolean;
@@ -139,6 +175,7 @@ const MenuItem = ({
   index: number;
   onHover: () => void;
   image?: string;
+  highlightStyle?: "background" | "underline";
 }) => {
   return (
     <div
@@ -150,8 +187,18 @@ const MenuItem = ({
     >
       <div
         className={`${styles.menuItem} ${
-          highlighted ? styles.highlighted : ""
+          highlighted
+            ? highlightStyle === "background"
+              ? styles.highlighted
+              : styles.underline
+            : ""
         }`}
+        style={{
+          color:
+            highlightStyle === "background"
+              ? "var(--fg)"
+              : "var(--response-color)",
+        }}
       >
         {highlighted ? "> " : "  "}
         {label}
