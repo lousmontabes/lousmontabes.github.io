@@ -28,7 +28,7 @@ const menuItems = [
     showcase: { type: "image", source: "/images/nyam-app.png" },
     links: [
       { label: "open", url: "https://nyam.app" },
-      { label: "code", url: "https://github.com/lousmontabes/nyam-app" },
+      { label: "code", url: "https://github.com/lousmontabes/foodie" },
     ],
   },
   {
@@ -53,15 +53,13 @@ const menuItems = [
     description: "a calendar app for organizing events and tasks",
     year: 2019,
     showcase: { type: "image", source: "/images/calendar.png" },
-    links: [
-      { label: "code", url: "https://github.com/lousmontabes/calendar-app" },
-    ],
+    links: [{ label: "code", url: "https://github.com/lousmontabes/calendar" }],
   },
   {
     label: "Boats & Cards",
     description:
       "a 1v1 multiplayer game for android, set on the ocean, with boats and cards",
-    year: 2018,
+    year: 2017,
     showcase: { type: "image", source: "/images/b-and-c.png" },
     links: [
       {
@@ -89,13 +87,16 @@ const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [isTitleHovered, setIsTitleHovered] = useState(false);
+  const [userScrollOverride, setUserScrollOverride] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        setUserScrollOverride(false);
         e.preventDefault();
         setCurrentIndex((prev) => (prev + 1) % menuItems.length);
       } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        setUserScrollOverride(false);
         e.preventDefault();
         setCurrentIndex(
           (prev) => (prev - 1 + menuItems.length) % menuItems.length
@@ -109,7 +110,20 @@ const App = () => {
   useEffect(() => {
     setCurrentProjectIndex(0);
     scrollToMenuItem();
+    !userScrollOverride && scrollToCurrentProjectShowcase();
   }, [currentIndex]);
+
+  const scrollToCurrentProjectShowcase = () => {
+    const container = document.querySelector(`.${styles.content}`);
+    const showcases = container?.querySelectorAll(`.${styles.showcase}`);
+    const target = showcases?.[currentIndex] as HTMLElement;
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 200,
+        behavior: "instant", // to fix: changed from "smooth" to "instant" to avoid re-triggering scroll event
+      });
+    }
+  };
 
   const scrollToMenuItem = () => {
     const optionsMenu = document.querySelector("#optionsMenu");
@@ -119,14 +133,6 @@ const App = () => {
 
     console.log(currentIndex, menuItems.length);
     const isLastItem = currentIndex === menuItems.length - 1;
-    const isScrolledToRight = optionsMenu
-      ? Math.abs(
-          optionsMenu.scrollLeft +
-            optionsMenu.clientWidth -
-            optionsMenu.scrollWidth
-        ) === 0
-      : false;
-
     const optionsWrapper = document.querySelector(`.${styles.optionsWrapper}`);
 
     if (optionsWrapper && isLastItem) {
@@ -135,28 +141,21 @@ const App = () => {
 
     if (menuItem && optionsMenu) {
       const gradientOffset = 32;
-
-      // Get bounding rectangles
       const menuRect = optionsMenu.getBoundingClientRect();
       const itemRect = menuItem.getBoundingClientRect();
 
-      // Check if item is out of view (left or right side)
       if (
         itemRect.left < menuRect.left + gradientOffset ||
         itemRect.right > menuRect.right - gradientOffset
       ) {
-        // Calculate the left position of the menuItem relative to the scroll container
         const itemLeft = menuItem.offsetLeft;
-        // If item is out on the left, scroll so it's just after the gradient
         if (itemRect.left < menuRect.left + gradientOffset) {
           const targetScroll = itemLeft - gradientOffset;
           optionsMenu.scrollTo({
             left: targetScroll,
             behavior: "smooth",
           });
-        }
-        // If item is out on the right, scroll so it's just before the right gradient
-        else if (itemRect.right > menuRect.right - gradientOffset) {
+        } else if (itemRect.right > menuRect.right - gradientOffset) {
           const itemRight = itemLeft + menuItem.offsetWidth;
           const targetScroll =
             itemRight - menuRect.width + (!isLastItem ? gradientOffset : 0);
@@ -207,6 +206,8 @@ const App = () => {
     const container = document.querySelector(`.${styles.content}`);
 
     function updateCurrentIndexOnScroll() {
+      setUserScrollOverride(true);
+
       if (!container) return;
 
       const showcases = Array.from(
@@ -274,16 +275,7 @@ const App = () => {
                       label={item.label}
                       highlighted={currentIndex === i}
                       onClick={() => {
-                        const showcaseEls = document.querySelectorAll(
-                          `.${styles.showcase}`
-                        );
-                        const target = showcaseEls[i] as HTMLElement;
-                        if (target) {
-                          window.scrollTo({
-                            top: target.offsetTop - 200,
-                            behavior: "smooth",
-                          });
-                        }
+                        scrollToCurrentProjectShowcase();
                       }}
                       index={i}
                       onHover={() => {
