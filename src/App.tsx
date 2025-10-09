@@ -8,6 +8,10 @@ const menuItems = [
     description: "merge cubes in 3D space",
     year: 2025,
     showcase: { type: "image", source: "/images/hypercube.png" },
+    links: [
+      { label: "play", url: "https://montab.es/icecuber" },
+      { label: "code", url: "https://github.com/lousmontabes/icecuber" },
+    ],
   },
   {
     label: "miniclub",
@@ -15,30 +19,43 @@ const menuItems = [
       "an app for communities with no algorithms & just the necessary",
     year: 2025,
     showcase: { type: "image", source: "/images/miniclub.gif" },
+    links: [{ label: "code", url: "https://github.com/lousmontabes/miniclub" }],
   },
   {
     label: "nyam.app",
     description: "an AI-powered nutrients tracker",
     year: 2024,
     showcase: { type: "image", source: "/images/nyam-app.png" },
+    links: [
+      { label: "open", url: "https://nyam.app" },
+      { label: "code", url: "https://github.com/lousmontabes/nyam-app" },
+    ],
   },
   {
     label: "portfolio: gerard borràs",
     description: "portfolio for filmmaker and photographer Gerard Borràs",
     year: 2022,
     showcase: { type: "image", source: "/images/gerard-borras.png" },
+    links: [{ label: "open", url: "https://gerardborras.com" }],
   },
   {
     label: "filee.es",
     description: "an encrypted file management app",
     year: 2021,
     showcase: { type: "image", source: "/images/fileees.png" },
+    links: [
+      { label: "open", url: "https://filee.es" },
+      { label: "code", url: "https://github.com/lousmontabes/fileees" },
+    ],
   },
   {
     label: "Calendar",
     description: "a calendar app for organizing events and tasks",
     year: 2019,
     showcase: { type: "image", source: "/images/calendar.png" },
+    links: [
+      { label: "code", url: "https://github.com/lousmontabes/calendar-app" },
+    ],
   },
   {
     label: "Boats & Cards",
@@ -46,14 +63,27 @@ const menuItems = [
       "a 1v1 multiplayer game for android, set on the ocean, with boats and cards",
     year: 2018,
     showcase: { type: "image", source: "/images/b-and-c.png" },
+    links: [
+      {
+        label: "code",
+        url: "https://github.com/lousmontabes/boats-and-cards",
+      },
+    ],
   },
   {
     label: "Codechat",
     description: "a chat app for developers",
     year: 2015,
     showcase: { type: "image", source: "/images/codechat.png" },
+    links: [{ label: "code", url: "https://github.com/lousmontabes/codechat" }],
   },
 ];
+
+const linkColors: { [key: string]: string } = {
+  open: "var(--description-color)",
+  code: "var(--link-color)",
+  play: "var(--accent)",
+};
 
 const App = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -235,7 +265,7 @@ const App = () => {
         <div className={styles.footer}>
           <div className={styles.prompt}>
             <TrembleText
-              text={"github @lousmontabes  ·  email lluis@montab.es"}
+              text={"github @lousmontabes  ·  email lluismontabes@gmail.com"}
               intensity={1}
             />
           </div>
@@ -356,7 +386,7 @@ type ProjectShowcaseProps = {
   label: string;
   description: string;
   year: number;
-  url?: string;
+  links: { label: string; url: string }[];
   showcase: { type: string; source: string };
 };
 
@@ -364,7 +394,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   label,
   description,
   year,
-  url = "https://montab.es",
+  links,
   showcase: { type, source },
 }: ProjectShowcaseProps) => (
   <div className={styles.showcase}>
@@ -412,31 +442,38 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
       </div>
       <div className={styles.projectDescription}>{description}</div>
       <div className={styles.projectLinks}>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ display: "inline-flex", alignItems: "center", gap: "0.4em" }}
-        >
-          Open
-          <svg
-            width=".6em"
-            height=".6em"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ verticalAlign: "middle" }}
-            aria-label="External link"
+        {links.map(({ label, url }) => (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4em",
+              color: linkColors[label],
+            }}
           >
-            <path
-              d="M13.5 3H17v3.5M9 11l8-8M17 17H3V3h5 M17 12V16"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
+            {label}
+            <svg
+              width=".6em"
+              height=".6em"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ verticalAlign: "middle" }}
+              aria-label="External link"
+            >
+              <path
+                d="M13.5 3H17v3.5M9 11l8-8M17 17H3V3h5 M17 12V16"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        ))}
       </div>
     </div>
   </div>

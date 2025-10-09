@@ -7,7 +7,8 @@
   --font: "Overpass Mono", monospace;
   --text-color: #ffffff;
   --response-color: #9c9c9e;
-  --description-color: #ff357a; /* Vibrant red for description */
+  --description-color: #ff357a;
+  --link-color: #535bf2;
 }
 
 * {
@@ -225,4 +226,9 @@ body {
   background-position: center;
   background-image: url("https://images.unsplash.com/vector-1759217082542-075a1529d0a5?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   object-fit: cover;
+}
+
+.projectLinks {
+  display: flex;
+  gap: 1rem;
 }
