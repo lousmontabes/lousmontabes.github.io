@@ -186,7 +186,8 @@ body {
 .footer {
   position: fixed;
   bottom: 0;
-  padding: 1.5rem 0;
+  left: 0;
+  padding: 1.5rem;
   width: 100%;
   background: linear-gradient(
     to top,
