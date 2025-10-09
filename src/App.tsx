@@ -253,10 +253,7 @@ const App = () => {
               onMouseEnter={() => setIsTitleHovered(true)}
               onMouseLeave={() => setIsTitleHovered(false)}
             >
-              <TrembleText
-                text="lluís montabes /"
-                intensity={isTitleHovered ? 3 : 1.5}
-              />
+              <TrembleText text="lluís montabes /" />
             </div>
             {/* <div className={styles.response}>
               <p>
@@ -289,10 +286,7 @@ const App = () => {
             </div>
           </div>
           <div className={styles.description}>
-            <TrembleText
-              text={`~ ${menuItems[currentIndex].description}`}
-              intensity={1}
-            />
+            <TrembleText text={`~ ${menuItems[currentIndex].description}`} />
           </div>
         </div>
         <div className={styles.content}>
@@ -304,7 +298,6 @@ const App = () => {
           <div className={styles.prompt}>
             <TrembleText
               text={"github @lousmontabes  ·  email lluismontabes@gmail.com"}
-              intensity={1}
             />
           </div>
         </div>
@@ -354,7 +347,7 @@ const MenuItem = ({
         }}
       >
         {highlightStyle === "background" && false ? "/ " : "  "}
-        <TrembleText text={label} intensity={highlighted ? 1.5 : 0} />
+        <TrembleText text={label} enabled={highlighted} />
         {image && (
           <img
             src={image}
@@ -369,12 +362,12 @@ const MenuItem = ({
 
 const TrembleText = ({
   text,
-  intensity,
+  enabled = true,
 }: {
   text: string;
-  intensity: number;
+  enabled?: boolean;
 }) => {
-  if (intensity === 0) {
+  if (!enabled) {
     return <span>{text}</span>;
   }
 
