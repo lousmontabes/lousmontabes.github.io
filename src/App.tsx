@@ -39,14 +39,11 @@ const menuItems = [
     links: [{ label: "open", url: "https://gerardborras.com" }],
   },
   {
-    label: "filee.es",
-    description: "an encrypted file management app",
+    label: "yizi",
+    description: "a flashcards app for learning chinese",
     year: 2021,
-    showcase: { type: "image", source: "/images/fileees.png" },
-    links: [
-      { label: "open", url: "https://filee.es" },
-      { label: "code", url: "https://github.com/lousmontabes/fileees" },
-    ],
+    showcase: { type: "image", source: "/images/yizi.png" },
+    links: [{ label: "code", url: "https://github.com/lousmontabes/yizi" }],
   },
   {
     label: "Calendar",
@@ -54,6 +51,16 @@ const menuItems = [
     year: 2019,
     showcase: { type: "image", source: "/images/calendar.png" },
     links: [{ label: "code", url: "https://github.com/lousmontabes/calendar" }],
+  },
+  {
+    label: "filee.es",
+    description: "an encrypted file management app",
+    year: 2018,
+    showcase: { type: "image", source: "/images/fileees.png" },
+    links: [
+      { label: "open", url: "https://filee.es" },
+      { label: "code", url: "https://github.com/lousmontabes/fileees" },
+    ],
   },
   {
     label: "Boats & Cards",
