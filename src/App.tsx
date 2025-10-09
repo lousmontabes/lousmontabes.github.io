@@ -374,27 +374,6 @@ const TrembleText = ({
   text: string;
   intensity: number;
 }) => {
-  const spansRef = useRef<(HTMLSpanElement | null)[]>([]);
-
-  useEffect(() => {
-    let running = true;
-    function animate() {
-      if (!running) return;
-      spansRef.current.forEach((span) => {
-        if (span) {
-          const x = (Math.random() - 0.5) * 2 * intensity;
-          const y = (Math.random() - 0.5) * 2 * intensity;
-          span.style.transform = `translate(${x}px, ${y}px)`;
-        }
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-    return () => {
-      running = false;
-    };
-  }, [text, intensity]); // <-- add intensity here
-
   if (intensity === 0) {
     return <span>{text}</span>;
   }
@@ -404,13 +383,10 @@ const TrembleText = ({
       {text.split("").map((char, i) => (
         <span
           key={i}
-          ref={(el) => {
-            spansRef.current[i] = el;
-          }}
+          className={styles["tremble-char"]}
           style={{
-            display: "inline-block",
-            transition: "transform 0.1s",
-            willChange: "transform",
+            animationDuration: `${0.2 + Math.random() * 0.3}s`,
+            animationDelay: `${Math.random() * 0.3}s`,
           }}
         >
           {char === " " ? "\u00A0" : char}

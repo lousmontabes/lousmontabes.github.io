@@ -232,3 +232,29 @@ body {
   display: flex;
   gap: 1rem;
 }
+@keyframes tremble {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-0.35px, 0.35px);
+  }
+  40% {
+    transform: translate(0.35px, -0.35px);
+  }
+  60% {
+    transform: translate(-0.35px, -0.35px);
+  }
+  80% {
+    transform: translate(0.35px, 0.35px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.tremble-char {
+  display: inline-block;
+  animation: tremble 0.3s infinite;
+  will-change: transform;
+}
