@@ -133,8 +133,6 @@ const App = () => {
       optionsWrapper.classList.add(styles.noRightFade);
     }
 
-    // ^ check why the delay
-
     if (menuItem && optionsMenu) {
       const gradientOffset = 32;
 
@@ -205,6 +203,45 @@ const App = () => {
     };
   }, [currentIndex]);
 
+  useEffect(() => {
+    const container = document.querySelector(`.${styles.content}`);
+
+    function updateCurrentIndexOnScroll() {
+      if (!container) return;
+
+      const showcases = Array.from(
+        container.querySelectorAll(`.${styles.showcase}`)
+      );
+      let maxVisible = 0;
+      let bestIndex = 0;
+
+      showcases.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        const visible = Math.max(
+          0,
+          Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
+        );
+        if (visible > maxVisible) {
+          maxVisible = visible;
+          bestIndex = i;
+        }
+      });
+
+      setCurrentIndex(bestIndex);
+    }
+
+    window.addEventListener("scroll", updateCurrentIndexOnScroll);
+    window.addEventListener("resize", updateCurrentIndexOnScroll);
+
+    // Initial check
+    updateCurrentIndexOnScroll();
+
+    return () => {
+      window.removeEventListener("scroll", updateCurrentIndexOnScroll);
+      window.removeEventListener("resize", updateCurrentIndexOnScroll);
+    };
+  }, []);
+
   return (
     <div className={styles.terminal}>
       <div className={styles.menu}>
@@ -237,7 +274,16 @@ const App = () => {
                       label={item.label}
                       highlighted={currentIndex === i}
                       onClick={() => {
-                        // window.location.hash = item.href;
+                        const showcaseEls = document.querySelectorAll(
+                          `.${styles.showcase}`
+                        );
+                        const target = showcaseEls[i] as HTMLElement;
+                        if (target) {
+                          window.scrollTo({
+                            top: target.offsetTop - 200,
+                            behavior: "smooth",
+                          });
+                        }
                       }}
                       index={i}
                       onHover={() => {
