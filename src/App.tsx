@@ -312,8 +312,6 @@ const MenuItem = ({
   onClick,
   index,
   onHover,
-  image,
-  highlightStyle = "background",
 }: {
   label: string;
   highlighted: boolean;
@@ -321,7 +319,6 @@ const MenuItem = ({
   index: number;
   onHover: () => void;
   image?: string;
-  highlightStyle?: "background" | "underline";
 }) => {
   return (
     <div
@@ -333,28 +330,13 @@ const MenuItem = ({
     >
       <div
         className={`${styles.menuItem} ${
-          highlighted
-            ? highlightStyle === "background"
-              ? styles.highlighted
-              : styles.underline
-            : ""
+          highlighted ? styles.highlighted : ""
         }`}
         style={{
-          color:
-            highlightStyle === "background"
-              ? "var(--fg)"
-              : "var(--response-color)",
+          color: "var(--fg)",
         }}
       >
-        {highlightStyle === "background" && false ? "/ " : "  "}
         <TrembleText text={label} enabled={highlighted} />
-        {image && (
-          <img
-            src={image}
-            // alt={"Showcase image for " + label}
-            className={styles.menuItemImage}
-          />
-        )}
       </div>
     </div>
   );
