@@ -208,13 +208,13 @@ body {
   width: 100%;
   background: linear-gradient(
     to bottom,
-    var(--bg) 60%,
+    var(--bg) 52.5%,
     rgba(20, 20, 26, 0) 100%
   );
 }
 
 .content {
-  margin-top: 10rem;
+  margin: 10rem 0;
 }
 
 .mediaImage {

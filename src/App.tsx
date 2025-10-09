@@ -7,7 +7,7 @@ const menuItems = [
     label: "hypercube",
     description: "merge cubes in 3D space",
     year: 2025,
-    showcase: { type: "embed", source: "https://montab.es/icecuber" },
+    showcase: { type: "image", source: "/images/hypercube.png" },
   },
   {
     label: "miniclub",
@@ -31,21 +31,21 @@ const menuItems = [
   {
     label: "filee.es",
     description: "an encrypted file management app",
-    year: 2022,
+    year: 2021,
     showcase: { type: "image", source: "/images/fileees.png" },
-  },
-  {
-    label: "Boats & Cards",
-    description:
-      "a 1v1 multiplayer game for android, set on the ocean, with boats and cards",
-    year: 2019,
-    showcase: { type: "image", source: "/images/b-and-c.png" },
   },
   {
     label: "Calendar",
     description: "a calendar app for organizing events and tasks",
     year: 2019,
     showcase: { type: "image", source: "/images/calendar.png" },
+  },
+  {
+    label: "Boats & Cards",
+    description:
+      "a 1v1 multiplayer game for android, set on the ocean, with boats and cards",
+    year: 2018,
+    showcase: { type: "image", source: "/images/b-and-c.png" },
   },
   {
     label: "Codechat",
@@ -76,7 +76,6 @@ const App = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentIndex]);
 
-  // Optionally, auto-focus the first item on mount
   useEffect(() => {
     setCurrentProjectIndex(0);
     scrollToMenuItem();
@@ -208,7 +207,7 @@ const App = () => {
                       label={item.label}
                       highlighted={currentIndex === i}
                       onClick={() => {
-                        window.location.hash = item.href;
+                        // window.location.hash = item.href;
                       }}
                       index={i}
                       onHover={() => {
@@ -337,7 +336,9 @@ const TrembleText = ({
       {text.split("").map((char, i) => (
         <span
           key={i}
-          ref={(el) => (spansRef.current[i] = el)}
+          ref={(el) => {
+            spansRef.current[i] = el;
+          }}
           style={{
             display: "inline-block",
             transition: "transform 0.1s",
@@ -356,7 +357,7 @@ type ProjectShowcaseProps = {
   description: string;
   year: number;
   url?: string;
-  showcase: { type: "embed" | "image"; source: string };
+  showcase: { type: string; source: string };
 };
 
 const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
