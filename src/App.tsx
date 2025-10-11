@@ -302,9 +302,14 @@ const App = () => {
         </div>
         <div className={styles.footer}>
           <div className={styles.prompt}>
-            <TrembleText
-              text={"github @lousmontabes  ·  email lluismontabes@gmail.com"}
-            />
+            <TrembleText text={"github @lousmontabes"} />
+          </div>
+          <div className={styles.prompt} id={styles.spacer}>
+            {" "}
+            ·{" "}
+          </div>
+          <div className={styles.prompt}>
+            <TrembleText text={"email lluismontabes@gmail.com"} />
           </div>
         </div>
       </div>
