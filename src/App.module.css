@@ -74,7 +74,6 @@ body {
   background: transparent;
   border: none;
   font-family: inherit;
-  cursor: pointer;
   text-align: left;
   transform: scale(1);
   transition: 0.2s;

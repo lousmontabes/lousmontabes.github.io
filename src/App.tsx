@@ -301,16 +301,26 @@ const App = () => {
           ))}
         </div>
         <div className={styles.footer}>
-          <div className={styles.prompt}>
-            <TrembleText text={"github @lousmontabes"} />
-          </div>
+          <a
+            href="https://github.com/lousmontabes"
+            style={{ textDecoration: "none", color: "inherit", border: "none" }}
+          >
+            <div className={styles.prompt}>
+              <TrembleText text={"github @lousmontabes"} />
+            </div>
+          </a>
           <div className={styles.prompt} id={styles.spacer}>
             {" "}
             ·{" "}
           </div>
-          <div className={styles.prompt}>
-            <TrembleText text={"email lluismontabes@gmail.com"} />
-          </div>
+          <a
+            href="mailto:lluismontabes@gmail.com"
+            style={{ textDecoration: "none", color: "inherit", border: "none" }}
+          >
+            <div className={styles.prompt}>
+              <TrembleText text={"email lluismontabes@gmail.com"} />
+            </div>
+          </a>
         </div>
       </div>
     </div>
