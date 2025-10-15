@@ -137,7 +137,6 @@ const App = () => {
       currentIndex % menuItems.length
     ] as HTMLElement;
 
-    console.log(currentIndex, menuItems.length);
     const isLastItem = currentIndex === menuItems.length - 1;
     const optionsWrapper = document.querySelector(`.${styles.optionsWrapper}`);
 
@@ -187,7 +186,6 @@ const App = () => {
               optionsMenu.scrollWidth
           ) === 0;
 
-        console.log(currentIndex, menuItems.length, isScrolledToRight);
         if (currentIndex !== menuItems.length - 1 && !isScrolledToRight) {
           optionsWrapper.classList.remove(styles.noRightFade);
         } else if (isScrolledToRight) {
