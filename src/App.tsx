@@ -8,7 +8,7 @@ const menuItems = [
     description: "merge cubes in 3D space",
     year: 2025,
     status: "active",
-    showcase: { type: "image", source: "/images/hypercube.png" },
+    showcase: [{ type: "image", source: "/images/hypercube.png" }],
     links: [
       { label: "play", url: "https://montab.es/icecuber" },
       { label: "code", url: "https://github.com/lousmontabes/icecuber" },
@@ -20,7 +20,11 @@ const menuItems = [
     description: "an AI-powered nutrients tracker",
     year: 2024,
     status: "active",
-    showcase: { type: "image", source: "/images/nyam.gif" },
+    showcase: [
+      { type: "image", source: "/images/nyam.gif" },
+      // { type: "image", source: "/images/nyam-2.png" },
+      // { type: "image", source: "/images/nyam-3.png" },
+    ],
     links: [
       { label: "open", url: "https://foodie-7b69b.web.app/" },
       { label: "code", url: "https://github.com/lousmontabes/foodie" },
@@ -32,7 +36,7 @@ const menuItems = [
     description: "a flashcards app for learning Chinese",
     year: 2021,
     status: "archived",
-    showcase: { type: "image", source: "/images/yizi.png" },
+    showcase: [{ type: "image", source: "/images/yizi.png" }],
     links: [{ label: "code", url: "https://github.com/lousmontabes/yizi" }],
     tech: ["React Native", "JavaScript", "Expo"],
   },
@@ -41,7 +45,7 @@ const menuItems = [
     description: "website for the board game club Ludo;UB",
     year: 2018,
     status: "archived",
-    showcase: { type: "image", source: "/images/ludoub.png" },
+    showcase: [{ type: "image", source: "/images/ludo-ub.png" }],
     links: [
       { label: "open", url: "https://montab.es/ludo-ub" },
       { label: "code", url: "https://github.com/lousmontabes/ludo-ub" },
@@ -53,7 +57,7 @@ const menuItems = [
     description: "an experimentation with file management & encryption app",
     year: 2018,
     status: "archived",
-    showcase: { type: "image", source: "/images/fileees.png" },
+    showcase: [{ type: "image", source: "/images/fileees.png" }],
     links: [{ label: "code", url: "https://github.com/lousmontabes/fileees" }],
     tech: ["PHP", "CryptoJS", "jQuery", "MySQL"],
   },
@@ -63,7 +67,7 @@ const menuItems = [
       "a 1v1 real-time multiplayer game for android, set on the ocean, with boats. And cards.",
     year: 2017,
     status: "archived",
-    showcase: { type: "image", source: "/images/b-and-c.png" },
+    showcase: [{ type: "image", source: "/images/b-and-c.png" }],
     links: [
       {
         label: "code",
@@ -77,7 +81,7 @@ const menuItems = [
     description: "a chat app for developers",
     year: 2015,
     status: "archived",
-    showcase: { type: "image", source: "/images/codechat.png" },
+    showcase: [{ type: "image", source: "/images/codechat.png" }],
     links: [{ label: "code", url: "https://github.com/lousmontabes/codechat" }],
     tech: ["Plain HTML / CSS", "JavaScript", "MySQL"],
   },
@@ -397,7 +401,7 @@ type ProjectShowcaseProps = {
   tech: string[];
   status: string;
   links: { label: string; url: string }[];
-  showcase: { type: string; source: string };
+  showcase: { type: string; source: string }[];
 };
 
 const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
@@ -407,38 +411,40 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   links,
   tech,
   status,
-  showcase: { type, source },
+  showcase,
 }: ProjectShowcaseProps) => (
   <div className={styles.showcase}>
     <div className={styles.media}>
-      {type === "embed" ? (
-        <iframe
-          src={source}
-          width="300"
-          height="375"
-          style={{ border: "none", borderRadius: "8px" }}
-          title="Project embed"
-        />
-      ) : (
-        // <div
-        //   className={styles.mediaImage}
-        //   style={{ backgroundImage: `url(${source})` }}
-        // />
-        <img
-          src={source}
-          width="300"
-          height="375"
-          style={{ borderRadius: "8px" }}
-          alt={"Showcase image for " + label}
-          className={styles.mediaImage}
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null;
-            target.src =
-              "https://images.unsplash.com/vector-1759217082542-075a1529d0a5?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-          }}
-        />
-      )}
+      <div className={styles.mediaScroller}>
+        {showcase.map((item, index) => (
+          <div key={index} className={styles.mediaItem}>
+            {item.type === "embed" ? (
+              <iframe
+                src={item.source}
+                width="300"
+                height="375"
+                style={{ border: "none", borderRadius: "8px" }}
+                title={`Project embed ${index + 1}`}
+              />
+            ) : (
+              <img
+                src={item.source}
+                width="300"
+                height="375"
+                style={{ borderRadius: "8px" }}
+                alt={`Showcase image ${index + 1} for ${label}`}
+                className={styles.mediaImage}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.onerror = null;
+                  target.src =
+                    "https://images.unsplash.com/vector-1759217082542-075a1529d0a5?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+                }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
     <div className={styles.projectInfo}>
       <div>
@@ -459,6 +465,7 @@ const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         )}
         {links.map(({ label, url }) => (
           <a
+            key={label}
             href={url}
             target="_blank"
             rel="noopener noreferrer"
