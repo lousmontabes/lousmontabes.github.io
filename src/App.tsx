@@ -22,7 +22,7 @@ const menuItems = [
     status: "active",
     showcase: { type: "image", source: "/images/nyam.gif" },
     links: [
-      { label: "open", url: "https://nyam.app" },
+      { label: "open", url: "https://foodie-7b69b.web.app/" },
       { label: "code", url: "https://github.com/lousmontabes/foodie" },
     ],
     tech: ["React", "JavaScript", "OpenAI API", "Firebase"],
